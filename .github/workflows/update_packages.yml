@@ -1,0 +1,53 @@
+name: Update npm packages
+
+on:
+  workflow_dispatch:
+    branches:
+      - auto-bump-packages
+    inputs:
+      editorUI:
+        description: "Select editor-ui version update type"
+        required: true
+        default: "none"
+        type: choice
+        options:
+          - none
+          - patch
+          - minor
+          - major
+      editorFields:
+        description: "Select editor-fields version update type"
+        required: true
+        default: "none"
+        type: choice
+        options:
+          - none
+          - patch
+          - minor
+          - major
+      editorSupport:
+        description: "Select editor-support version update type"
+        required: true
+        default: "none"
+        type: choice
+        options:
+          - none
+          - patch
+          - minor
+          - major
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Bump editorUI
+        if: github.event.inputs.editorUI != 'none'
+        run: echo "Bumping editorUI to  ${{ github.event.inputs.editorUI }}"
+      - name: Bump editorFields
+        if: github.event.inputs.editorFields != 'none'
+        run: echo "Bumping editorFields to  ${{ github.event.inputs.editorFields }}"
+      - name: Bump editorSupport
+        if: github.event.inputs.editorSupport != 'none'
+        run: echo "Bumping editorSupport to  ${{ github.event.inputs.editorSupport }}"
